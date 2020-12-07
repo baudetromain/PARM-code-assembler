@@ -33,10 +33,8 @@ public class Line
         this.operandsStr = line.split(" ");
         this.instructionString = line.split(" ")[0];
         this.pattern = getPattern();
+        System.out.println(instructionString + " " + pattern);
         this.instruction = Instruction.findInstruction(instructionString, pattern);
-
-        if(instruction == null) System.out.println("y'a un souci frère");
-
         this.binaryCode = new boolean[16];
         operands = new ArrayList<>();
 
@@ -143,10 +141,7 @@ public class Line
         {
             boolean[] the4bits = new boolean[4];
 
-            for(int j = 4*i; j < 4*(i+1); j++)
-            {
-                the4bits[j%4] = binaryCode[i];
-            }
+            System.arraycopy(binaryCode, 4 * i, the4bits, 0, 4);
 
             res.append(convertToHexa(the4bits));
         }
@@ -154,7 +149,7 @@ public class Line
         return res.toString();
     }
 
-    char convertToHexa(boolean[] toConvert)
+    static char convertToHexa(boolean[] toConvert)
     {
         int nb = 0;
 
