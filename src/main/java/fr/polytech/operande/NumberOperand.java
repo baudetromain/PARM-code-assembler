@@ -1,11 +1,11 @@
-package fr.polytech;
+package fr.polytech.operande;
 
-public class NumberOperande extends Operande
+public class NumberOperand extends Operand
 {
 
     protected int number;
 
-    public NumberOperande(String stringInLine, int size)
+    public NumberOperand(String stringInLine, int size)
     {
         super(stringInLine, size);
         this.number = Integer.valueOf(stringInLine.substring(1));

@@ -1,11 +1,11 @@
-package fr.polytech;
+package fr.polytech.operande;
 
-public class RegisterOperande extends Operande
+public class RegisterOperand extends Operand
 {
 
     protected int registerNumber;
 
-    public RegisterOperande(String stringInLine)
+    public RegisterOperand(String stringInLine)
     {
         super(stringInLine, 3);
         this.registerNumber = Integer.parseInt(String.valueOf(stringInLine.charAt(1)));

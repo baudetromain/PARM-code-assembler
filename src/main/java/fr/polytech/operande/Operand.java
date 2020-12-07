@@ -1,20 +1,20 @@
-package fr.polytech;
+package fr.polytech.operande;
 
-public abstract class Operande
+public abstract class Operand
 {
 
     protected String stringInLine;
     protected boolean[] bits;
     protected int size;
 
-    protected Operande(String stringInLine, int size)
+    protected Operand(String stringInLine, int size)
     {
         this.stringInLine = stringInLine;
         this.size = size;
         this.bits = new boolean[size];
     }
 
-    protected static boolean[] convertANumberToBitsArray(int toConvert, int size)
+    static boolean[] convertANumberToBitsArray(int toConvert, int size)
     {
         boolean[] array = new boolean[size];
 
@@ -37,14 +37,14 @@ public abstract class Operande
     @Override
     public String toString()
     {
-        String res = "";
+        StringBuilder res = new StringBuilder();
 
         for(boolean b : bits)
         {
-            res += ((b) ? 1 : 0);
+            res.append((b) ? 1 : 0);
         }
 
-        return res;
+        return res.toString();
     }
 
     public String getStringInLine()
