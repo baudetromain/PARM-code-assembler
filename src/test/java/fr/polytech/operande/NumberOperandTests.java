@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NumberOperandTests
 {
@@ -31,16 +32,16 @@ public class NumberOperandTests
         {
             Operand op = list.get(i);
             String expectedShort = Integer.toBinaryString(i);
-            String expected = "";
+            StringBuilder expected = new StringBuilder();
 
             for(int j = expectedShort.length(); j < 8; j++)
             {
-                expected += "0";
+                expected.append("0");
             }
 
-            expected += expectedShort;
+            expected.append(expectedShort);
 
-            assertTrue(op.toString().equals(expected));
+            assertEquals(expected.toString(), op.toString());
         }
     }
 
@@ -49,7 +50,7 @@ public class NumberOperandTests
     {
         for(int i = 0; i < list.size(); i++)
         {
-            assertTrue(((NumberOperand) list.get(i)).getNumber() == i);
+            assertEquals(i, ((NumberOperand) list.get(i)).getNumber());
         }
     }
 

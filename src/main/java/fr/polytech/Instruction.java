@@ -14,7 +14,7 @@ public enum Instruction
     SUBS1("0001101", "SUBS", Arrays.asList(3, 3, 3), "rrr"),
     ADDS2("0001110", "ADDS", Arrays.asList(3, 3, 3), "rrn"),
     SUBS2("0001111", "SUBS", Arrays.asList(3, 3, 3), "rrn"),
-    MOVS("00100", "MOVS", Arrays.asList(5, 3, 3), "rn"),
+    MOVS("00100", "MOVS", Arrays.asList(3, 8), "rn"),
     ANDS("0100000000", "ANDS", Arrays.asList(3, 3), "rr"),
     EORS("0100000001", "EORS", Arrays.asList(3, 3), "rr"),
     LSLS2("0100000010", "LSLS", Arrays.asList(3, 3), "rr"),
@@ -33,8 +33,8 @@ public enum Instruction
     MVNS("0100001111", "MVNS", Arrays.asList(3, 3), "rr"),
     STR("10010", "STR", Arrays.asList(3, 8), "rsn"),
     LDR("10011", "LDR", Arrays.asList(3, 8), "rsn"),
-    ADD("101100000", "ADD", Collections.singletonList(8), "ssn"),
-    SUB("101100001", "SUB", Collections.singletonList(8), "ssn"),
+    ADD("101100000", "ADD", Collections.singletonList(7), "ssn"),
+    SUB("101100001", "SUB", Collections.singletonList(7), "ssn"),
     BEQ("11010000", "BEQ", Collections.singletonList(8), "undefined"),
     BNE("11010001", "BNE", Collections.singletonList(8), "undefined"),
     BCS("11010010", "BCS", Collections.singletonList(8), "undefined"),
@@ -100,7 +100,7 @@ public enum Instruction
     {
         for(Instruction i : Instruction.values())
         {
-            if(i.getInstruction().equals(instructionString) && (i.getPattern().equals(pattern) || i.getPattern().equals("undefined")))
+            if(i.getInstruction().equalsIgnoreCase(instructionString) && (i.getPattern().equals(pattern) || i.getPattern().equals("undefined")))
             {
                 return i;
             }
