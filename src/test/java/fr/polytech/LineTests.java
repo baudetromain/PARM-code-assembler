@@ -1,9 +1,12 @@
 package fr.polytech;
 
+import fr.polytech.operande.NumberOperand;
+import fr.polytech.operande.RegisterOperand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,7 +52,7 @@ public class LineTests
     }
 
     @Test
-    void getBinaryCode()
+    void getBinaryCodeTest()
     {
         assertArrayEquals(line1.getBinaryCode(), new boolean[]{
                 true, false, true, true,
@@ -74,14 +77,44 @@ public class LineTests
     }
 
     @Test
-    void getOperands() {
+    void getOperandsTest()
+    {
+        assertEquals(line1.getOperands(), Collections.singletonList(new NumberOperand("#16", 7)));
+        assertEquals(line2.getOperands(), Arrays.asList(new RegisterOperand("r0"), new NumberOperand("#20", 8)));
+        assertEquals(line3.getOperands(), Arrays.asList(new RegisterOperand("r0"), new NumberOperand("#1", 8)));
     }
 
     @Test
-    void getInstruction() {
+    void getInstructionTest()
+    {
+        assertEquals(line1.getInstruction(), Instruction.SUB);
+        assertEquals(line2.getInstruction(), Instruction.STR);
+        assertEquals(line3.getInstruction(), Instruction.MOVS);
     }
 
     @Test
-    void getInstructionString() {
+    void getInstructionStringTest()
+    {
+        assertTrue(line1.getInstructionString().equalsIgnoreCase("sub"));
+        assertTrue(line2.getInstructionString().equalsIgnoreCase("str"));
+        assertTrue(line3.getInstructionString().equalsIgnoreCase("movs"));
+    }
+
+    @Test
+    void getHexaCodeTest()
+    {
+        assertEquals(line1.getHexaCode(), "b090");
+        assertEquals(line2.getHexaCode(), "9014");
+        assertEquals(line3.getHexaCode(), "2001");
+    }
+
+    @Test
+    void convertToHexaTest()
+    {
+        assertEquals(Line.convertToHexa(new boolean[]{false, false, false, false}), '0');
+        assertEquals(Line.convertToHexa(new boolean[]{true, false, true, false}), 'a');
+        assertEquals(Line.convertToHexa(new boolean[]{false, true, true, true}), '7');
+        assertEquals(Line.convertToHexa(new boolean[]{true, true, false, true}), 'd');
+        assertEquals(Line.convertToHexa(new boolean[]{true, true, true, true}), 'f');
     }
 }

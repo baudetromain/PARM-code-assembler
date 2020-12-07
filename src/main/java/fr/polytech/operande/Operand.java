@@ -1,5 +1,7 @@
 package fr.polytech.operande;
 
+import java.util.Arrays;
+
 public abstract class Operand
 {
 
@@ -55,5 +57,20 @@ public abstract class Operand
     public boolean[] getBits()
     {
         return bits;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Operand operand = (Operand) o;
+        return Arrays.equals(bits, operand.bits);
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Arrays.hashCode(bits);
     }
 }
