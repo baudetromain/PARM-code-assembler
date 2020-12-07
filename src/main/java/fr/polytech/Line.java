@@ -19,17 +19,24 @@ public class Line
     private String instructionString;
     private String pattern;
 
-    private static List<Character> forbiddenChars = Arrays.asList(',', '[', ']', '{', '}');
-    private static List<Character> hexaCharacters = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+    private static final List<Character> forbiddenChars = Arrays.asList(',', '[', ']', '{', '}');
+    private static final List<Character> hexaCharacters = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
 
     public Line(String line)
     {
         this.line = line;
+    }
+
+    public void prepareLine()
+    {
         this.removeForbiddenChars();
         this.operandsStr = line.split(" ");
         this.instructionString = line.split(" ")[0];
         this.pattern = getPattern();
         this.instruction = Instruction.findInstruction(instructionString, pattern);
+
+        if(instruction == null) System.out.println("y'a un souci frère");
+
         this.binaryCode = new boolean[16];
         operands = new ArrayList<>();
 
@@ -39,47 +46,47 @@ public class Line
 
     void removeForbiddenChars()
     {
-        String newLine = "";
+        StringBuilder newLine = new StringBuilder();
 
         for(int i = 0; i < line.length(); i++)
         {
             if(!forbiddenChars.contains(line.charAt(i)))
             {
-                newLine += line.charAt(i);
+                newLine.append(line.charAt(i));
             }
         }
 
-        this.line = newLine;
+        this.line = newLine.toString();
     }
 
-    private String getPattern()
+    String getPattern()
     {
-        String pattern = "";
+        StringBuilder pattern = new StringBuilder();
 
         for(int i = 1; i < operandsStr.length; i++)
         {
             if(operandsStr[i].equals("sp"))
             {
-                pattern += "s";
+                pattern.append("s");
             }
             else if(operandsStr[i].charAt(0) == '#')
             {
-                pattern += "n";
+                pattern.append("n");
             }
             else if(operandsStr[i].charAt(0) == 'r')
             {
-                pattern += "r";
+                pattern.append("r");
             }
             else
             {
-                pattern += "b";
+                pattern.append("b");
             }
         }
 
-        return pattern;
+        return pattern.toString();
     }
 
-    private void fillOperandsList()
+    void fillOperandsList()
     {
         int i = 0;
 
@@ -91,7 +98,7 @@ public class Line
                 {
                     if(operand.charAt(0) == '#')
                     {
-                        operands.add(new NumberOperand(operand, this.instruction.getOperandsSize().get(i)));
+                        operands.add(new NumberOperand(operand, this.instruction.getOperandsSize().get(i-1)));
                     }
                     else
                     {
@@ -108,7 +115,7 @@ public class Line
         }
     }
 
-    private void fillBinaryCode()
+    void fillBinaryCode()
     {
         int i = 0;
 
@@ -130,7 +137,7 @@ public class Line
 
     public String getHexaCode()
     {
-        String res = "";
+        StringBuilder res = new StringBuilder();
 
         for(int i = 0; i < 4; i++)
         {
@@ -141,13 +148,13 @@ public class Line
                 the4bits[j%4] = binaryCode[i];
             }
 
-            res += convertToHexa(the4bits);
+            res.append(convertToHexa(the4bits));
         }
 
-        return res;
+        return res.toString();
     }
 
-    private char convertToHexa(boolean[] toConvert)
+    char convertToHexa(boolean[] toConvert)
     {
         int nb = 0;
 

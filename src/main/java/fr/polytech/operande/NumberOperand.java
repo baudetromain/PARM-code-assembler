@@ -8,7 +8,7 @@ public class NumberOperand extends Operand
     public NumberOperand(String stringInLine, int size)
     {
         super(stringInLine, size);
-        this.number = Integer.valueOf(stringInLine.substring(1));
+        this.number = Integer.parseInt(stringInLine.substring(1));
         this.bits = convertANumberToBitsArray(number, size);
     }
 

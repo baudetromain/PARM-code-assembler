@@ -3,7 +3,6 @@ package fr.polytech.operande;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class RegisterOperandTests
@@ -35,6 +34,9 @@ public class RegisterOperandTests
         assertTrue(op6.toString().equals("101"));
         assertTrue(op7.toString().equals("110"));
         assertTrue(op8.toString().equals("111"));
+    }
+
+    private void assertTrue(boolean equals) {
     }
 
     @Test
