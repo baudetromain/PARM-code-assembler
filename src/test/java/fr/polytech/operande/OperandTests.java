@@ -3,6 +3,7 @@ package fr.polytech.operande;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class OperandTests
 {
@@ -33,4 +34,27 @@ public class OperandTests
         }
     }
 
+    @Test
+    void getTwosComplement()
+    {
+        assertEquals(Operand.getTwosComplement("11111110"), "00000010");
+        assertEquals(Operand.getTwosComplement("10101010"), "01010110");
+        assertEquals(Operand.getTwosComplement("00000000"), "00000000");
+    }
+
+    @Test
+    void getBinaryRepresentationOfInt()
+    {
+        assertEquals(Operand.getBinaryRepresentationOfInt(7), "00000111");
+        assertEquals(Operand.getBinaryRepresentationOfInt(23), "00010111");
+        assertEquals(Operand.getBinaryRepresentationOfInt(63), "00111111");
+        assertEquals(Operand.getBinaryRepresentationOfInt(90), "01011010");
+        assertEquals(Operand.getBinaryRepresentationOfInt(2), "00000010");
+
+        assertEquals(Operand.getBinaryRepresentationOfInt(-7), "11111001");
+        assertEquals(Operand.getBinaryRepresentationOfInt(-23), "11101001");
+        assertEquals(Operand.getBinaryRepresentationOfInt(-63), "11000001");
+        assertEquals(Operand.getBinaryRepresentationOfInt(-90), "10100110");
+        assertEquals(Operand.getBinaryRepresentationOfInt(-2), "11111110");
+    }
 }

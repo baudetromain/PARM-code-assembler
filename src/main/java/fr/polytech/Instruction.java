@@ -34,22 +34,22 @@ public enum Instruction
     STR("10010", "STR", Arrays.asList(3, 8), "rsn"),
     LDR("10011", "LDR", Arrays.asList(3, 8), "rsn"),
     ADD("101100000", "ADD", Collections.singletonList(7), "ssn"),
-    SUB("101100001", "SUB", Collections.singletonList(7), "ssn"),
-    BEQ("11010000", "BEQ", Collections.singletonList(8), "undefined"),
-    BNE("11010001", "BNE", Collections.singletonList(8), "undefined"),
-    BCS("11010010", "BCS", Collections.singletonList(8), "undefined"),
-    BCC("11010011", "BCC", Collections.singletonList(8), "undefined"),
-    BMI("11010100", "BMI", Collections.singletonList(8), "undefined"),
-    BPL("11010101", "BPL", Collections.singletonList(8), "undefined"),
-    BVS("11010110", "BVS", Collections.singletonList(8), "undefined"),
-    BVC("11010111", "BVC", Collections.singletonList(8), "undefined"),
-    BHI("11011000", "BHI", Collections.singletonList(8), "undefined"),
-    BLS("11011001", "BLS", Collections.singletonList(8), "undefined"),
-    BGE("11011010", "BGE", Collections.singletonList(8), "undefined"),
-    BLT("11011011", "BLT", Collections.singletonList(8), "undefined"),
-    BGT("11011100", "BGT", Collections.singletonList(8), "undefined"),
-    BLE("11011101", "BLE", Collections.singletonList(8), "undefined"),
-    BAL("11011110", "B", Collections.singletonList(8), "undefined");
+    SUB("101100001", "SUB", Collections.singletonList(7), "sn"),
+    BEQ("11010000", "BEQ", Collections.singletonList(8), "b"),
+    BNE("11010001", "BNE", Collections.singletonList(8), "b"),
+    BCS("11010010", "BCS", Collections.singletonList(8), "b"),
+    BCC("11010011", "BCC", Collections.singletonList(8), "b"),
+    BMI("11010100", "BMI", Collections.singletonList(8), "b"),
+    BPL("11010101", "BPL", Collections.singletonList(8), "b"),
+    BVS("11010110", "BVS", Collections.singletonList(8), "b"),
+    BVC("11010111", "BVC", Collections.singletonList(8), "b"),
+    BHI("11011000", "BHI", Collections.singletonList(8), "b"),
+    BLS("11011001", "BLS", Collections.singletonList(8), "b"),
+    BGE("11011010", "BGE", Collections.singletonList(8), "b"),
+    BLT("11011011", "BLT", Collections.singletonList(8), "b"),
+    BGT("11011100", "BGT", Collections.singletonList(8), "b"),
+    BLE("11011101", "BLE", Collections.singletonList(8), "b"),
+    BAL("11011110", "B", Collections.singletonList(8), "b");
 
     private boolean[] staticOpCode;
     private String instruction;
@@ -100,7 +100,15 @@ public enum Instruction
     {
         for(Instruction i : Instruction.values())
         {
-            if(i.getInstruction().equalsIgnoreCase(instructionString) && (i.getPattern().equals(pattern) || i.getPattern().equals("undefined")))
+            if(i.getInstruction().equalsIgnoreCase(instructionString) && (i.getPattern().equals(pattern)))
+            {
+                return i;
+            }
+        }
+
+        for(Instruction i : Instruction.values())
+        {
+            if(i.getInstruction().equalsIgnoreCase(instructionString) && (i.getPattern().startsWith(pattern)))
             {
                 return i;
             }

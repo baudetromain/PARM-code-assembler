@@ -11,16 +11,16 @@ import java.util.List;
 public class Line
 {
 
-    private String line;
-    private String[] operandsStr;
-    private boolean[] binaryCode;
-    private List<Operand> operands;
-    private Instruction instruction;
-    private String instructionString;
-    private String pattern;
+    protected String line;
+    protected String[] operandsStr;
+    protected boolean[] binaryCode;
+    protected List<Operand> operands;
+    protected Instruction instruction;
+    protected String instructionString;
+    protected String pattern;
 
-    private static final List<Character> forbiddenChars = Arrays.asList(',', '[', ']', '{', '}');
-    private static final List<Character> hexaCharacters = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
+    protected static final List<Character> forbiddenChars = Arrays.asList(',', '[', ']', '{', '}');
+    protected static final List<Character> hexaCharacters = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f');
 
     public Line(String line)
     {
@@ -126,9 +126,18 @@ public class Line
         {
             for(boolean operandeBit : operand.getBits())
             {
-                this.binaryCode[i] = operandeBit;
-                i++;
+                if(i < 16)
+                {
+                    this.binaryCode[i] = operandeBit;
+                    i++;
+                }
             }
+        }
+
+        while(i < 16)
+        {
+            this.binaryCode[i] = false;
+            i++;
         }
     }
 

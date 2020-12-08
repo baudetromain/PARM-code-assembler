@@ -7,6 +7,7 @@ public class AssemblyFile
 {
     private final File file;
     private final List<List<String>> lines;
+    private List<Line> hexaCodeLines;
 
     public AssemblyFile(String fileName)
     {
@@ -17,6 +18,7 @@ public class AssemblyFile
     {
         this.file = file;
         lines = new ArrayList<>();
+        hexaCodeLines = new ArrayList<>();
     }
 
     public void readLines() throws IOException
@@ -54,6 +56,41 @@ public class AssemblyFile
                 }
             }
         }
+
+        reader.close();
+
+        for(int i = 0; i < lines.size(); i++)
+        {
+            List<String> lineAndLabel = lines.get(i);
+
+            if(lineAndLabel.get(1).charAt(0) != 'b')
+            {
+                Line l = new Line(lineAndLabel.get(1));
+                l.prepareLine();
+                hexaCodeLines.add(l);
+            }
+            else
+            {
+                String labelLookedFor = lineAndLabel.get(1).split(" ")[1].substring(1);
+                int indexOfLookedLine = getLinePositionFromLabel(labelLookedFor);
+                Line l = new BranchLine(lineAndLabel.get(1), indexOfLookedLine-i-3);
+                l.prepareLine();
+                hexaCodeLines.add(l);
+            }
+        }
+    }
+
+    int getLinePositionFromLabel(String labelLookedFor)
+    {
+        for(int i = 0; i < lines.size(); i++)
+        {
+            if(lines.get(i).get(0).equals(labelLookedFor))
+            {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     static String normalizeLine(String line)
@@ -114,9 +151,9 @@ public class AssemblyFile
     {
         StringBuilder sb = new StringBuilder();
 
-        for(List<String> l : lines)
+        for(Line l : hexaCodeLines)
         {
-            sb.append((l.get(0).equals("")) ? "[no label]" : l.get(0)).append(": ").append(l.get(1)).append("\n");
+            sb.append(l.getHexaCode()).append(" ");
         }
 
         return sb.toString();

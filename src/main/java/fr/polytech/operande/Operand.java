@@ -36,6 +36,50 @@ public abstract class Operand
         return array;
     }
 
+    static String getTwosComplement(String binaryToConvert)
+    {
+        int length = binaryToConvert.length();
+        StringBuilder sb = new StringBuilder();
+
+        for(char c : binaryToConvert.toCharArray())
+        {
+            sb.append((c == '0') ? '1' : '0');
+        }
+
+        StringBuilder sb2 = new StringBuilder(Integer.toBinaryString(Integer.parseInt(sb.toString(), 2)+1));
+
+        while(sb2.length() < 8)
+        {
+            sb2.insert(0, "0");
+        }
+
+        while(sb2.length() > 8)
+        {
+            sb2.deleteCharAt(0);
+        }
+
+        return sb2.toString();
+    }
+
+    public static String getBinaryRepresentationOfInt(int toConvert) throws IllegalArgumentException
+    {
+        if(toConvert > 127 || toConvert < -128)
+        {
+            throw new IllegalArgumentException("the number to convert must be between -128 and 127");
+        }
+
+        StringBuilder sb = new StringBuilder(Integer.toBinaryString(Math.abs(toConvert)));
+
+        while(sb.length() < 7)
+        {
+            sb.insert(0, "0");
+        }
+
+        sb.insert(0, "0");
+
+        return (toConvert >= 0) ? sb.toString() : getTwosComplement(sb.toString());
+    }
+
     @Override
     public String toString()
     {
