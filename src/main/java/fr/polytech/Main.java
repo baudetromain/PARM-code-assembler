@@ -9,6 +9,8 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
+        System.out.println("starting...");
+
         BufferedReader br = new BufferedReader(new FileReader(new File("code.s")));
         List<String> lignes = new ArrayList<>();
 
