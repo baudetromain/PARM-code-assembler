@@ -9,26 +9,16 @@ public class Main
 
     public static void main(String[] args) throws IOException
     {
-        System.out.println("starting !");
-
-        BufferedReader br = new BufferedReader(new FileReader(new File("code.s")));
-        List<String> lignes = new ArrayList<>();
-
-        String line;
-        while((line = br.readLine()) != null)
+        if(args.length == 0)
         {
-            lignes.add(line.trim());
+            System.out.println("No file found");
         }
-
-        for(String ligne : lignes)
+        else
         {
-            System.out.println(ligne);
-//            if(!ligne.equals("main:"))
-//            {
-//                Line belleLigne = new Line(ligne);
-//                belleLigne.prepareLine();
-//                System.out.print(belleLigne.getHexaCode() + " ");
-//            }
+            System.out.println("parsing file \"" + args[0] + "\"...\n");
+            AssemblyFile file = new AssemblyFile(args[0]);
+            file.readLines();
+            System.out.println(file);
         }
     }
 

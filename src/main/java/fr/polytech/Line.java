@@ -33,7 +33,6 @@ public class Line
         this.operandsStr = line.split(" ");
         this.instructionString = line.split(" ")[0];
         this.pattern = getPattern();
-        System.out.println(instructionString + " " + pattern);
         this.instruction = Instruction.findInstruction(instructionString, pattern);
         this.binaryCode = new boolean[16];
         operands = new ArrayList<>();
