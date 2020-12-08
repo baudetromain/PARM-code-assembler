@@ -1,5 +1,6 @@
 package fr.polytech;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -34,7 +35,7 @@ public enum Instruction
     STR("10010", "STR", Arrays.asList(3, 8), "rsn"),
     LDR("10011", "LDR", Arrays.asList(3, 8), "rsn"),
     ADD("101100000", "ADD", Collections.singletonList(7), "ssn"),
-    SUB("101100001", "SUB", Collections.singletonList(7), "sn"),
+    SUB("101100001", "SUB", Collections.singletonList(7), "ssn"),
     BEQ("11010000", "BEQ", Collections.singletonList(8), "b"),
     BNE("11010001", "BNE", Collections.singletonList(8), "b"),
     BCS("11010010", "BCS", Collections.singletonList(8), "b"),
@@ -98,11 +99,28 @@ public enum Instruction
 
     public static Instruction findInstruction(String instructionString, String pattern)
     {
+        List<Instruction> possibilities = new ArrayList<>();
+
         for(Instruction i : Instruction.values())
         {
-            if(i.getInstruction().equalsIgnoreCase(instructionString) && (i.getPattern().equals(pattern)))
+            if(i.getInstruction().equalsIgnoreCase(instructionString))
             {
-                return i;
+                possibilities.add(i);
+            }
+        }
+
+        if(possibilities.size() == 1)
+        {
+            return possibilities.get(0);
+        }
+        else
+        {
+            for(Instruction i : possibilities)
+            {
+                if(i.getPattern().equals(pattern))
+                {
+                    return i;
+                }
             }
         }
 
