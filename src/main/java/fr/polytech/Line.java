@@ -29,8 +29,6 @@ public class Line
 
     public void prepareLine()
     {
-        System.out.println("parsing line : " + line);
-
         this.removeForbiddenChars();
         this.operandsStr = line.split(" ");
         this.instructionString = line.split(" ")[0];
@@ -41,8 +39,6 @@ public class Line
 
         this.fillOperandsList();
         this.fillBinaryCode();
-
-        System.out.println("parsing done : hexa code is " + getHexaCode());
     }
 
     void removeForbiddenChars()

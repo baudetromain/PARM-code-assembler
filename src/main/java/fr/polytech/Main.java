@@ -9,7 +9,7 @@ public class Main
     {
         if(args.length == 0)
         {
-            System.out.println("No file found");
+            System.out.println("No file given in argument !");
         }
         else
         {
@@ -32,6 +32,7 @@ public class Main
 
             try
             {
+                System.out.println("parsing file " + args[0] + ((bw == null) ? " (no output file provided, the result will be printed in console) ..." : " in " + args[1] + "..."));
                 file.readLines();
             }
             catch(IOException e)
@@ -39,6 +40,8 @@ public class Main
                 System.err.println("An exception occured while reading the file lines.");
                 e.printStackTrace();
             }
+
+            System.out.println();
 
             if(bw != null)
             {

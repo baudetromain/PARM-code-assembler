@@ -27,6 +27,7 @@ public class AssemblyFile
 
         String line;
         boolean startFound = false;
+        boolean endFound = false;
         String label = "";
 
         while((line = reader.readLine()) != null)
@@ -40,9 +41,13 @@ public class AssemblyFile
                     startFound = true;
                 }
             }
-            else
+            else if(!endFound)
             {
-                if(!line.equals(""))
+                if(line.equals("bx lr"))
+                {
+                    endFound = true;
+                }
+                else if(!line.equals(""))
                 {
                     if(line.charAt(0) == '.')
                     {
