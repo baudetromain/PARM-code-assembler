@@ -29,6 +29,8 @@ public class Line
 
     public void prepareLine()
     {
+        System.out.println("parsing line : " + line);
+
         this.removeForbiddenChars();
         this.operandsStr = line.split(" ");
         this.instructionString = line.split(" ")[0];
@@ -39,6 +41,8 @@ public class Line
 
         this.fillOperandsList();
         this.fillBinaryCode();
+
+        System.out.println("parsing done : hexa code is " + getHexaCode());
     }
 
     void removeForbiddenChars()
@@ -122,14 +126,49 @@ public class Line
             i++;
         }
 
-        for(Operand operand : this.operands)
+        if(this.instruction == Instruction.MULS) //VERY PARTICULAR CASE (why does this even exists...?)
         {
-            for(boolean operandeBit : operand.getBits())
+            for(int j = 1; j >= 0; j--)
             {
-                if(i < 16)
+                Operand operand = this.operands.get(j);
+
+                for(boolean operandeBit : operand.getBits())
                 {
-                    this.binaryCode[i] = operandeBit;
-                    i++;
+                    if(i < 16)
+                    {
+                        this.binaryCode[i] = operandeBit;
+                        i++;
+                    }
+                }
+            }
+        }
+        else
+        {
+            if(this.instruction.isReverse())
+            {
+                for(int j = this.operands.size()-1; j >= 0; j--)
+                {
+                    Operand operand = this.operands.get(j);
+
+                    for(boolean operandeBit : operand.getBits())
+                    {
+                        if(i < 16)
+                        {
+                            this.binaryCode[i] = operandeBit;
+                            i++;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (Operand operand : this.operands) {
+                    for (boolean operandeBit : operand.getBits()) {
+                        if (i < 16) {
+                            this.binaryCode[i] = operandeBit;
+                            i++;
+                        }
+                    }
                 }
             }
         }
